@@ -19,5 +19,19 @@ single parameter scan (ps1), and double parameter scan (ps2).
     snakemake -s sbpipe_pe.snake --configfile config_pe.yaml
 
 
+In order to run these workflows, `SBpipe`_ must be installed.
+
+Conda users can automatically install the worflow dependencies using the provided `environment.yaml` file:
+
+::
+    
+    # install dependencies into isolated environment
+    conda env create -n myworkflow --file environment.yaml
+
+    # activate environment
+    source activate myworkflow
+
+
+
 .. _Snakemake: https://snakemake.readthedocs.io
 .. _SBpipe: https://github.com/pdp10/sbpipe
