@@ -22,7 +22,6 @@ Description: A Snakemake workflow to process single parameter scans of a mathema
 Run: snakemake -s sbpipe_ps1.snake --configfile FILE
 """
 
-import sys
 import os
 
 

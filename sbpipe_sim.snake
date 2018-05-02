@@ -22,7 +22,6 @@ Description: A Snakemake workflow to process Time Course simulation of a mathema
 Run: snakemake -s sbpipe_sim.snake --configfile FILE
 """
 
-import sys
 import os
 
 

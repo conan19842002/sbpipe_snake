@@ -22,7 +22,6 @@ Description: A Snakemake workflow to process parameter estimations for a mathema
 Run: snakemake -s sbpipe_pe.snake --configfile FILE
 """
 
-import sys
 import os
 
 

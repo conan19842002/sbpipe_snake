@@ -22,7 +22,6 @@ Description: A Snakemake workflow to process double parameter scans of a mathema
 Run: snakemake -s sbpipe_ps2.snake --configfile FILE
 """
 
-import sys
 import os
 
 
