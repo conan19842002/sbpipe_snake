@@ -1,7 +1,7 @@
 Snakemake workflows for SBpipe
 ==============================
 
-|Build Status| |MIT License|
+|Build Status| |MIT License| |Snakemake|
 
 This repository contains the `Snakemake`_ workflows for the `SBpipe`_ project.
 The workflows are for model parameter estimation (pe), simulation (sim), 
@@ -41,3 +41,5 @@ Conda users can automatically install the worflow dependencies using the provide
    :target: https://travis-ci.org/pdp10/sbpipe
 .. |MIT License| image:: http://img.shields.io/badge/license-MIT-blue.svg
    :target: https://opensource.org/licenses/MIT
+.. |Snakemake| image:: https://img.shields.io/badge/snakemake-≥4.8.1-brightgreen.svg?style=flat-square
+   :target: https://snakemake.bitbucket.io
