@@ -27,8 +27,10 @@ channels:
   - pdp10
   - bioconda
   - conda-forge
+  - fbergmann
   - defaults
 dependencies:
-  - sbpipe
+  - sbpipe=4.18.*
   - sbpiper=1.8.*
   - snakemake
+  - python-copasi        # -c fbergmann
