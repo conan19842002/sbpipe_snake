@@ -76,7 +76,7 @@ rule target:
     input: file=os.path.join(WORKING_FOLDER, REPORT_PREFIX + MODEL_NAME + PDF_EXT)
 
 
-include: "./sbpipe_common.snake"
+include: os.path.abspath(os.path.join(os.path.dirname(__file__), "./sbpipe_common.snake")))
 
 
 rule sbpipe_sim_postproc:
