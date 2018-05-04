@@ -27,11 +27,8 @@ channels:
   - pdp10
   - bioconda
   - conda-forge
-  - pkgw
   - defaults
 dependencies:
   - sbpipe
   - sbpiper=1.8.*
   - snakemake
-  - texlive-core
-  - texlive-selected
