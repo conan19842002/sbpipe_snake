@@ -70,7 +70,7 @@ rule target:
     input: file=os.path.join(WORKING_FOLDER, REPORT_PREFIX + MODEL_NAME + PDF_EXT)
 
 
-include: "sbpipe_common.snake"
+include: "./sbpipe_common.snake"
 
 
 rule sbpipe_ps1_postproc:
