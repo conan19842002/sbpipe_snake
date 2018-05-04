@@ -1,0 +1,97 @@
+# snakemake pipeline
+#
+# Copyright (c) 2018 Piero Dalle Pezze
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+
+"""
+Author: Piero Dalle Pezze
+Description: Common rules
+"""
+
+import os
+
+
+rule sbpipe_model_checking:
+    input:
+        file=MODEL
+    output:
+        file=os.path.join(WORKING_FOLDER, CHECKING_FOLDER, MODEL_NAME + '_check' + TXT_EXT)
+    run:
+        # An output file must be generated, as this is required input for the rule
+        # `sbpipe_preproc`.
+        from sbpipe.utils.io import write_mat_on_file
+        write_mat_on_file(output.file,
+                          ['No control was performed on this model.'])
+        if COPASI:
+            from sbpipe.snakemake.model_checking import model_checking
+            model_checking(input.file,
+                           output.file,
+                           TASK_TYPE)
+
+
+rule sbpipe_preproc:
+    input:
+        file=MODEL,
+        check=os.path.join(WORKING_FOLDER, CHECKING_FOLDER, MODEL_NAME + '_check' + TXT_EXT)
+    output:
+        file=os.path.join(WORKING_FOLDER, PREPROC_FOLDER, MODEL_NAME + "_{rep}" + MODEL_EXT)
+    run:
+        from sbpipe.snakemake.preproc import preproc
+        preproc(input.file,
+                output.file,
+                COPASI)
+
+
+if TASK_TYPE == 'Parameter Estimation':
+    rule sbpipe_gen_data:
+        input:
+            exp_dataset = expand(os.path.join(WORKING_FOLDER, PREPROC_FOLDER, "{ds}"), ds=EXP_DATASET),
+            file = os.path.join(WORKING_FOLDER, PREPROC_FOLDER, MODEL_NAME + "_{rep}" + MODEL_EXT)
+        output:
+            file = os.path.join(WORKING_FOLDER, PREPROC_FOLDER, MODEL_NAME + "_{rep}" + CSV_EXT)
+        run:
+            from sbpipe.snakemake.data_generation import generate_data
+            generate_data(input.file,
+                          COPASI)
+else:
+    rule sbpipe_gen_data:
+        input:
+            file = os.path.join(WORKING_FOLDER, PREPROC_FOLDER, MODEL_NAME + "_{rep}" + MODEL_EXT)
+        output:
+            file = os.path.join(WORKING_FOLDER, PREPROC_FOLDER, MODEL_NAME + "_{rep}" + CSV_EXT)
+        run:
+            from sbpipe.snakemake.data_generation import generate_data
+            generate_data(input.file,
+                          COPASI)
+
+
+rule sbpipe_pdf_report:
+    input:
+        file=os.path.join(WORKING_FOLDER, REPORT_PREFIX + MODEL_NAME + LATEX_EXT)
+    output:
+        file=os.path.join(WORKING_FOLDER, REPORT_PREFIX + MODEL_NAME + PDF_EXT)
+    params:
+        working_folder_dir=WORKING_FOLDER,
+        latex_file=REPORT_PREFIX + MODEL_NAME + LATEX_EXT
+    run:
+        from sbpipe.report.latex_reports import pdf_report
+        pdf_report(params.working_folder_dir,
+                   params.latex_file)
