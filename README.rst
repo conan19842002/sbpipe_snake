@@ -4,34 +4,47 @@ Snakemake workflows for SBpipe
 |Build Status| |MIT License| |SBpipe| |sbpiper| |Snakemake|
 
 This repository contains the `Snakemake`_ workflows for the `SBpipe`_ project.
-The workflows are for model parameter estimation (pe), simulation (sim), 
-single parameter scan (ps1), and double parameter scan (ps2).
+The workflows are:
 
-:: 
+- parameter estimation (pe)
+- simulation (sim)
+- single parameter scan (ps1)
+- double parameter scan (ps2)
+
+
+To run these workflows `SBpipe`_ and `Snakemake`_ must be installed.
+
+- `non-Miniconda users`: see the documentation to install these packages
+- `Miniconda users`: see below
+
+Therefore:
+
+::
 
     # clone workflow into working directory
-    git clone https://github.com/pdp10/sbpipe_snake.git path/to/workdir
-    cd path/to/workdir
+    git clone https://github.com/pdp10/sbpipe_snake.git project_name
+    cd project_name
 
-    # edit config_[sim|ps1|ps2|pe].yaml as needed
-    # vim config.yaml
+    ######################
+    # Miniconda users ONLY
+    # install dependencies into isolated environment
+    conda env create -n sbpipe_snake --file environment.yaml
+
+    # activate environment
+    conda activate sbpipe_snake
+    ######################
+
+    # create a folder Models and populate it with
+    # the mathematical models (see `SBpipe`_) to run.
+    mkdir Models
+
+    # edit config_[sim|ps1|ps2|pe].yaml as needed for your models
+    # e.g. for model simulation
+    vim config_sim.yaml
 
     # execute workflow, deploy software dependencies via conda
     # e.g. parameter estimation workflow
-    snakemake -s sbpipe_pe.snake --configfile config_pe.yaml
-
-
-In order to run these workflows, `SBpipe`_ must be installed.
-
-Conda users can automatically install the worflow dependencies using the provided `environment.yaml` file:
-
-::
-    
-    # install dependencies into isolated environment
-    conda env create -n myworkflow --file environment.yaml
-
-    # activate environment
-    source activate myworkflow
+    snakemake -s sbpipe_sim.snake --configfile config_sim.yaml
 
 
 .. _Snakemake: https://snakemake.readthedocs.io

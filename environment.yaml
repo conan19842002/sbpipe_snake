@@ -26,6 +26,7 @@ name:
 channels:
   - pdp10
   - bioconda
+  - conda-forge
   - pkgw
   - defaults
 dependencies:
