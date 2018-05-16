@@ -55,7 +55,7 @@ Therefore:
 .. |MIT License| image:: http://img.shields.io/badge/license-MIT-blue.svg
    :target: https://opensource.org/licenses/MIT
 .. |SBpipe| image:: https://img.shields.io/badge/sbpipe-≥4.18.0-brightgreen.svg?style=flat-square
-   :target: https://sbpipe.bitbucket.io
+   :target: http://sbpipe.readthedocs.io
 .. |sbpiper| image:: https://img.shields.io/badge/sbpiper-≥1.8.0-brightgreen.svg?style=flat-square
    :target: https://cran.r-project.org/package=sbpiper
 .. |Snakemake| image:: https://img.shields.io/badge/snakemake-≥4.8.1-brightgreen.svg?style=flat-square
